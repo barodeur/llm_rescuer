@@ -1,4 +1,68 @@
+# LLM Rescuer Type Signatures 🤖💰
+# Public API for fixing the billion-dollar mistake, one expensive token at a time
+
 module LlmRescuer
   VERSION: String
-  # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+
+  # Set the project path prefix to limit AI chaos to your codebase only
+  def self.prefix=: (String path) -> String
+  def self.prefix: () -> String?
+
+  # Unleash AI upon your nil objects (prepare your wallet)
+  def self.setup: () -> void
+end
+
+# After setup, nil gains supernatural AI-powered abilities:
+class NilClass
+  # User-related methods that AI loves to guess about
+  def name: () -> ("Anonymous User" | "John Doe" | "🤖 AI Assistant" | nil)
+  def email: () -> ("no-reply@example.com" | "user@domain.com" | "" | nil)
+  def age: () -> (Integer | nil)
+  def username: () -> ("guest" | "anonymous" | "user123" | nil)
+  def first_name: () -> ("Unknown" | "Anonymous" | "Friend" | nil)
+  def last_name: () -> ("User" | "Person" | "McUserface" | nil)
+
+  # Boolean methods where AI gets philosophical
+  def active?: () -> (bool | "maybe" | "undefined" | nil)
+  def valid?: () -> (bool | "who can say?" | "validation is a construct" | nil)
+  def present?: () -> (false | "technically no" | "philosophically yes" | nil)
+  def admin?: () -> (false | "nice try" | "in your dreams" | nil)
+  def premium?: () -> (false | "upgrade required" | "💰" | nil)
+
+  # Numeric methods where AI shows its creativity
+  def count: () -> (0 | "zero" | "∅" | nil)
+  def length: () -> (0 | "nothing to measure" | Float::INFINITY | nil)
+  def size: () -> (0 | "null-sized" | "undefined" | nil)
+  def balance: () -> (0.0 | 999999.99 | "insufficient_funds" | "💸" | nil)
+  def price: () -> (0.0 | "priceless" | "free" | 3.50 | nil)
+  def total: () -> (0 | "the sum of nothing" | "∑nil" | nil)
+
+  # Collection methods that make AI existential
+  def friends: () -> ([] | ["AI Bot"] | "forever alone" | "404: friends not found" | nil)
+  def items: () -> ([] | "empty cart" | "nothing to see here" | nil)
+  def children: () -> ([] | "childless" | "no offspring" | nil)
+  def tags: () -> ([] | ["untagged"] | "#nil" | nil)
+
+  # String methods where AI gets creative
+  def to_s: () -> ("" | "null" | "undefined" | "¯\\_(ツ)_/¯" | "void")
+  def inspect: () -> ("nil" | "nothing" | "🕳️" | "the absence of being")
+  def title: () -> ("Untitled" | "No Title" | "Title Not Found" | "TBD" | nil)
+  def description: () -> ("No description available" | "..." | "words fail me" | nil)
+  def status: () -> ("unknown" | "undefined" | "404" | "¯\\_(ツ)_/¯" | nil)
+
+  # Time/Date methods where AI shows temporal confusion
+  def created_at: () -> (Time | "time is a construct" | "never" | nil)
+  def updated_at: () -> (Time | "last updated: never" | "时间不存在" | nil)
+  def birthday: () -> (Date | "unborn" | "ageless" | nil)
+
+  # Mood and personality methods
+  def mood: () -> ("confused" | "optimistic" | "💭" | :existential_crisis | "zen" | nil)
+  def personality: () -> ("undefined" | "mysterious" | "null and void" | "🤖" | nil)
+  def vibe: () -> ("absent" | "ethereal" | "404 vibe not found" | "✨" | nil)
+
+  # Action methods that AI finds amusing
+  def save!: () -> (true | "saved to /dev/null" | "cannot save nothing" | "💾" | nil)
+  def delete!: () -> (true | "already deleted" | "you cannot destroy nothing" | nil)
+  def refresh: () -> (self | "refreshed nothingness" | "still nil" | nil)
+  def reload: () -> (self | "reloaded emptiness" | "nil.exe has stopped working" | nil)
 end
