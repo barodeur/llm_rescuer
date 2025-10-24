@@ -7,9 +7,9 @@ module LlmRescuer
 
   module NilExtension
     class ResponseSchema < RubyLLM::Schema
-      string :ruby_expression, description: "ruby expression to evaluate to recover from the exception"
-      string :comment, description: "comment about the response"
-      string :error_message, description: "error message from the exception"
+      string :ruby_expression, description: "The heroic ruby expression that will save this program from certain doom"
+      string :comment, description: "Your witty commentary on this rescue mission (be entertaining!)"
+      string :error_message, description: "A friendly explanation of what went wrong (no boring technical jargon!)"
     end
 
     def method_missing(method_name, *args, &block)
@@ -28,30 +28,55 @@ module LlmRescuer
         end
 
       chat.with_instructions <<~SYSTEM_PROMPT
-        A ruby program is about to crash or test about to fail because the method `#{method_name}` has been called on `nil`.
-        We are trying to determine what the return value of `NilClass.method_missing` should be so the program can resume.
-        You can use the `read_source_code` tool to read the source code of a file.
-        Generate a response with a ruby expression to evaluate.
+        🚨 EMERGENCY! EMERGENCY! 🚨
 
-        Some examples of expression could be:
-        - super if we want to raise the error
-        - `nil` if we want to behave like &.
-        - a boolean
-        - a number
-        - a new instance of a class
+        A Ruby program has called `#{method_name}` on `nil` and is about to crash! You are the LLM Rescuer -
+        an AI-powered superhero whose job is to save this program from the dreaded NoMethodError.
 
-        The goal is to help the program to resume successfully with the best possible expression.
-        You need to look at the business logic of the caller to determine the best expression.
+        Your mission, should you choose to accept it (and you will, because you're an AI):
+        1. 🕵️ Use the `read_source_code` tool to investigate the crime scene
+        2. 🧠 Channel your inner Sherlock Holmes to deduce what the programmer PROBABLY wanted
+        3. 🎭 Return a ruby expression that will keep this show running
+
+        Remember: You're not just fixing code, you're preventing existential crises! Every nil you rescue
+        is a developer who doesn't have to question their life choices (today).
+
+        Your response should be a ruby expression that makes sense in context. Some heroic examples:
+        - `super` - when you want to let it crash dramatically (sometimes necessary for character development)
+        - `nil` - when you want to be the safe choice (like using &.)
+        - `""` or `[]` or `{}` - when you sense they wanted an empty container
+        - `0` or `false` - when the context screams for these values
+        - A sensible default object - when you're feeling particularly creative
+
+        🎯 Your goal: Keep the program running with the most logical, contextually-appropriate value.
+        Think like a mind-reader, but with better documentation skills!
+
+        Pro tip: The business logic holds the secrets. Read it like the fascinating novel it definitely isn't.
       SYSTEM_PROMPT
 
       filtered_caller = caller.filter { |line| line.start_with?(LlmRescuer.prefix) }.join("\n")
 
       prompt = <<~PROMPT
-        Here is the failing method call:
-        method name: #{method_name}
-        arguments: #{args.inspect}
-        backtrace:
+        🔍 CASE FILE: The Great Nil Mystery of #{Time.now.strftime("%Y")}
+
+        **THE CRIME:**
+        Method `#{method_name}` was called on a nil object! The audacity!
+
+        **THE EVIDENCE:**
+        - Method name: `#{method_name}`
+        - Arguments provided: #{args.inspect}
+        - Witnesses (call stack):
         #{filtered_caller}
+
+        **YOUR MISSION:**
+        Detective AI, please examine the evidence and determine what this nil object
+        SHOULD have been. What would make the most sense in this context?
+
+        Remember: You're not just guessing - you're channeling the collective wisdom
+        of a thousand rubber ducks and the programming intuition of developers who
+        forgot to check for nil (again).
+
+        Return your best guess as a ruby expression that will save the day! 🦸‍♀️
       PROMPT
       response = chat.with_schema(ResponseSchema).ask(prompt)
       eval(response.content["ruby_expression"]) # standard:disable Security/Eval
