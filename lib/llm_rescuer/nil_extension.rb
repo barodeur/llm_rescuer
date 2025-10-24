@@ -13,19 +13,9 @@ module LlmRescuer
     end
 
     def method_missing(method_name, *args, &block)
-      chat =
-        RubyLLM
-          .chat
-          .with_tool(Tools::ReadSourceCodeTool)
-          .on_tool_call do |tool_call|
-          # Called when the AI decides to use a tool
-          puts "Calling tool: #{tool_call.name}"
-          puts "Arguments: #{tool_call.arguments}"
-        end
-          .on_tool_result do |result|
-          # Called after the tool returns its result
-          puts "Tool returned: #{result}"
-        end
+      chat = RubyLLM
+        .chat
+        .with_tool(Tools::ReadSourceCodeTool)
 
       chat.with_instructions <<~SYSTEM_PROMPT
         🚨 EMERGENCY! EMERGENCY! 🚨
