@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    llm_rescuer (0.1.0)
+    llm_rescuer (0.1.1)
       binding_of_caller (~> 1.0.1)
       ruby_llm (~> 1.8.2)
       ruby_llm-schema (~> 0.2.1)
